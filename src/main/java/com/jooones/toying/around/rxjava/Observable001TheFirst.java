@@ -2,7 +2,7 @@ package com.jooones.toying.around.rxjava;
 
 import rx.Observable;
 
-public class Observable001 {
+public class Observable001TheFirst {
 
     public static void main(String[] args) {
         Observable<String> observable = Observable.create(s -> {
@@ -13,15 +13,11 @@ public class Observable001 {
 
         observable.subscribe(System.out::println);
 
+
         System.out.println("-----------");
 
-        Observable<String> observable2 = Observable.create(s -> {
-            s.onNext("Buy");
-            s.onNext("Use");
-            s.onNext("Break");
-            s.onNext("Fix");
-            s.onCompleted();
-        });
+
+        Observable<String> observable2 = Observable.just("Buy", "Use", "Break", "Fix");
 
         observable2.subscribe(s -> System.out.println(s + " it"));
         observable2.subscribe(s -> System.out.println(s + " nothing!"));
