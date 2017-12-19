@@ -1,6 +1,6 @@
 # toying-around-with-rxjava
 
-Repository used by our reading group to do some exercises while reading the book `Reactive Programming with RxJava` [http://shop.oreilly.com/product/0636920042228.do].
+Repository used by our reading group to do some exercises while reading the book [Reactive Programming with RxJava](http://shop.oreilly.com/product/0636920042228.do).
 
 ## Content
 
