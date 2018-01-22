@@ -20,16 +20,7 @@ public class EventScheduler {
     static int TOLERANCE_IN_SECONDS = 10;
 
     public Observable<Event> scheduleEventsForIntervals(Observable<LocalTime> intervalStarts) {
-        return intervalStarts.flatMap(intervalStart -> {
-            Observable<Event> scheduledEventsForInterval = eventSource.getScheduledEventsForInterval(intervalStart);
-            return scheduledEventsForInterval
-                    .filter(event -> event.getPlannedTime().isAfter(intervalStart))
-                    .delay(5, TimeUnit.SECONDS)
-                    .mergeWith(scheduledEventsForInterval.filter(event -> !event.getPlannedTime().isAfter(intervalStart)))
-                    .delay(Duration.between(now(), intervalStart).getSeconds(), TimeUnit.SECONDS);
-
-            }
-        );
+        return Observable.empty();
     }
 
 }

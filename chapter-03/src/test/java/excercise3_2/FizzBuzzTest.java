@@ -38,7 +38,7 @@ public class FizzBuzzTest {
 
     @Test
     public void buzz() {
-        Observable<String> fizz = fizzBuzz.fizz(Observable.range(10, 25));
+        Observable<String> fizz = fizzBuzz.buzz(Observable.range(10, 25));
         TestSubscriber<String> subscriber = new TestSubscriber<>();
 
         fizz.subscribe();
@@ -51,10 +51,10 @@ public class FizzBuzzTest {
 
     @Test
     public void fizzBuzz() {
-        Observable<String> fizz = fizzBuzz.fizz(Observable.range(10, 25));
+        Observable<String> fizz = fizzBuzz.fizzBuzz(Observable.range(10, 15));
         TestSubscriber<String> subscriber = new TestSubscriber<>();
 
-        fizz.subscribe();
+        fizz.subscribe(subscriber);
         subscriber.awaitTerminalEvent();
         List<String> onNextEvents = subscriber.getOnNextEvents();
 
