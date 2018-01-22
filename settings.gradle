@@ -2,3 +2,5 @@ rootProject.name = 'rxjava'
 
 include 'original',
         'chapter-02'
+include 'chapter-03'
+
