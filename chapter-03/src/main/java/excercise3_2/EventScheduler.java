@@ -1,12 +1,8 @@
-package excecise3_1;
+package excercise3_2;
 
 import rx.Observable;
 
-import java.time.Duration;
 import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
-
-import static java.time.LocalTime.*;
 
 public class EventScheduler {
 

@@ -1,9 +1,9 @@
-package excecise3_1;
+package excercise3_2;
 
 import java.time.Duration;
 import java.time.LocalTime;
 
-import static excecise3_1.EventScheduler.*;
+import static excercise3_2.EventScheduler.*;
 import static java.time.LocalTime.now;
 
 public class Event {

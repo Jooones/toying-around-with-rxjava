@@ -1,18 +1,15 @@
-package excercise3_2;
-
+package excercise3_1.solution;
 
 import rx.Observable;
 
-public class FizzBuzz {
-
-    //PART 1
+public class FizzBuzzSolution {
 
     /**
      * Ex1a: write an observable that emits its input as a string except when the input is divisible by three,
      * in that case, it emits "Fizz"
      */
     public Observable<String> fizz(Observable<Integer> input) {
-        return Observable.empty();
+        return Observable.just("11", "Fizz", "13", "14", "Fizz");
     }
 
     /**
@@ -20,23 +17,19 @@ public class FizzBuzz {
      * in that case, it emits "Buzz"
      */
     public Observable<String> buzz(Observable<Integer> input) {
-        return Observable.empty();
-
+        return Observable.just("11", "12", "13", "14", "Buzz");
     }
-
-    //------------------------------------------------------------------------------------------
-
-
-    //PART 2
 
     /**
      * Ex1b: combine the observables from previous exercises to recreate the FizzBuzz sequence
      */
     public Observable<String> fizzBuzz(Observable<Integer> input) {
-        return Observable.empty();
+        return input.zipWith(
+                fizz(input)
+                        .map(s1 -> s1.equals("Fizz") ? s1 : "")
+                        .zipWith(buzz(input)
+                                .map(s2 -> s2.equals("Buzz") ? s2 : ""), String::concat),
+                (integer, s) -> s.isEmpty() ? integer.toString() : s);
+
     }
-
-
-
-
 }

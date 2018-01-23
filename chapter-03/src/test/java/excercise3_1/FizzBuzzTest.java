@@ -1,7 +1,5 @@
-package excercise3_2;
+package excercise3_1;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ListAssert;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;

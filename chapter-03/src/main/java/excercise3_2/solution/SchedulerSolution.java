@@ -1,7 +1,7 @@
-package excecise3_1.solution;
+package excercise3_2.solution;
 
-import excecise3_1.Event;
-import excecise3_1.EventSource;
+import excercise3_2.Event;
+import excercise3_2.EventSource;
 import rx.Observable;
 
 import java.time.Duration;
