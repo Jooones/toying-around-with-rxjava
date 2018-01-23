@@ -23,8 +23,8 @@ public class Event {
     public void executeEvent() {
         if(plannedTime.isAfter(now())) {
             throw new IllegalStateException("Event planned for: " + plannedTime + " scheduled at: " + now() + ", " +Duration.between(now(), plannedTime) + " too early");
-        } if(plannedTime.isBefore((now().minusSeconds(TOLERANCE_IN_SECONDS)))){
-            throw new IllegalStateException("Event scheduled" + Duration.between(plannedTime, now().minusSeconds(TOLERANCE_IN_SECONDS)) + " too late");
+        } if(plannedTime.isBefore((now().minusSeconds(TOLERANCE_IN_SECONDS/2)))){
+            throw new IllegalStateException("Event scheduled" + Duration.between(plannedTime, now().minusSeconds(TOLERANCE_IN_SECONDS/2)) + " too late");
         }
     }
 }
