@@ -16,7 +16,8 @@ public class MultiplesIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
+        int result = current;
         current = current+factor;
-        return current;
+        return result;
     }
 }
