@@ -1,4 +1,4 @@
-package excercise3_2;
+package excercise3_3;
 
 import org.junit.Test;
 import rx.Observable;
