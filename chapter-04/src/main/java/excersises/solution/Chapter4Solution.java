@@ -37,10 +37,19 @@ public class Chapter4Solution implements Chapter4 {
     }
 
     @Override
+    public Observable<Integer> transformNumbers(Observable<Integer> input) {
+        return input.zipWith(
+                getAllPagesUntilEmpty(),
+                (number1, number2) -> number1 * number2
+        );
+    }
+
+
+    @Override
     public Observable<Boolean> pollUntilUpdatesAvailable() {
         return Observable.fromCallable(() -> source.hasUpdates())
                 .repeat()
-                .takeUntil(updates -> updates).last();
+                .takeWhile(updates -> !updates);
     }
 
     @Override
@@ -59,6 +68,11 @@ public class Chapter4Solution implements Chapter4 {
                                         .flatMap(number -> original.contains(number)
                                                 .flatMap(contains -> contains ? Observable.empty() : Observable.just(number)))));
 
+    }
+
+    @Override
+    public Observable<Integer> onlyTransfromUpdatedValues(Observable<Integer> input) {
+        throw new UnsupportedOperationException();
     }
 
     private Observable<Integer> getNextPage(int pageNr) {

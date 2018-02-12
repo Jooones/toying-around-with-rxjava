@@ -55,6 +55,14 @@ public class PaginatedSourceImpl implements PaginatedSource {
         }
     }
 
+    @Override
+    public void resetValue(int originalValue, int newValue) {
+        if (updatedValues.contains(originalValue)) {
+            updatedValues.remove(originalValue);
+        }
+        throw new IllegalStateException("Value was never updated");
+    }
+
     private void checkPageNumber(int pageNumber) {
         if (pageNumber < 0 || pageNumber > maxPage) {
             IndexOutOfBoundsException exception = new IndexOutOfBoundsException("Invalid page number requested");

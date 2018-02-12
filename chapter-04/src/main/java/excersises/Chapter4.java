@@ -11,10 +11,13 @@ public interface Chapter4 {
 
     Observable<Integer> getAllPagesUntilEmpty();
 
+    Observable<Integer> transformNumbers(Observable<Integer> input);
+
     Observable<Boolean> pollUntilUpdatesAvailable();
 
     Observable<Integer> getAllPagesWhenUpdateAvailable();
 
     Observable<Integer> getOnlyUpdatedvalues();
 
+    Observable<Integer> onlyTransfromUpdatedValues(Observable<Integer> input);
 }

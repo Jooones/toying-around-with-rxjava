@@ -32,6 +32,12 @@ public class Chapter4Impl implements Chapter4 {
     }
 
     @Override
+    public Observable<Integer> transformNumbers(Observable<Integer> input) {
+        throw new UnsupportedOperationException();
+    }
+
+
+    @Override
     public Observable<Boolean> pollUntilUpdatesAvailable() {
         throw new UnsupportedOperationException();
     }
@@ -46,6 +52,11 @@ public class Chapter4Impl implements Chapter4 {
     public Observable<Integer> getOnlyUpdatedvalues() {
         throw new UnsupportedOperationException();
 
+    }
+
+    @Override
+    public Observable<Integer> onlyTransfromUpdatedValues(Observable<Integer> input) {
+        throw new UnsupportedOperationException();
     }
 
 }

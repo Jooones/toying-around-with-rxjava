@@ -3,14 +3,20 @@ package excersises;
 import common.PaginatedSourceImpl;
 import excersises.solution.Chapter4Solution;
 import org.junit.Test;
+import rx.Observable;
 import rx.observers.AssertableSubscriber;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static rx.Observable.from;
+import static rx.Observable.just;
 
 public class Chapter4Test {
 
@@ -18,6 +24,7 @@ public class Chapter4Test {
     private static final int PAGE_SIZE = 10;
     private static final int UPDATE_THRESHOLD = 4;
     private static final Set<Integer> UPDATED_VALUES = new HashSet<>(asList(7, 23, 44));
+    private static final List<Integer> RANDOM_VALUES = asList(196,138, 41,128,  9,164, 58,189, 74,118, 92, 34,162,117, 67,102,  1,177,151,198,153,155, 25,167,  4,  2,119, 73, 53,200,132, 27, 10, 38,178, 51, 57,133, 69,188,150,  7,116, 66,165,192, 49,108,107, 63,113, 68,  3,124,143);
 
     private PaginatedSourceImpl source = new PaginatedSourceImpl(MAX_PAGE, PAGE_SIZE, UPDATE_THRESHOLD, UPDATED_VALUES);
 
@@ -66,6 +73,18 @@ public class Chapter4Test {
     }
 
     @Test
+    public void transformNumbers() {
+        AssertableSubscriber<Integer> subscriber = chapter4.transformNumbers(from(RANDOM_VALUES)).test();
+
+        subscriber.awaitTerminalEvent();
+        subscriber.assertCompleted();
+        subscriber.assertValueCount(50);
+        subscriber.assertValues(IntStream.range(0, MAX_PAGE*PAGE_SIZE)
+                .map(number -> RANDOM_VALUES.get(number) * number).boxed().toArray(Integer[]::new));
+        assertThat(source.getGetPageCounter()).isEqualTo(6);
+    }
+
+    @Test
     public void pollUntilUpdatesAvailable() {
         AssertableSubscriber<Boolean> subscriber = chapter4.pollUntilUpdatesAvailable().test();
 
@@ -94,6 +113,17 @@ public class Chapter4Test {
     @Test
     public void getOnlyUpdatedvalues() {
         AssertableSubscriber<Integer> subscriber = chapter4.getOnlyUpdatedvalues().test();
+
+        subscriber.awaitTerminalEvent();
+        subscriber.assertCompleted();
+        subscriber.assertValueCount(UPDATED_VALUES.size());
+        subscriber.assertValues(UPDATED_VALUES.stream().mapToInt(number -> number * 1_000).boxed().toArray(Integer[]::new));
+        assertThat(source.getGetPageCounter()).isEqualTo((MAX_PAGE + 1)*2);
+    }
+
+    @Test
+    public void onlyTransfromUpdatedValues() {
+        AssertableSubscriber<Integer> subscriber = chapter4.onlyTransfromUpdatedValues(from(RANDOM_VALUES)).test();
 
         subscriber.awaitTerminalEvent();
         subscriber.assertCompleted();
