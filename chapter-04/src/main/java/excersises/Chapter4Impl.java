@@ -2,6 +2,9 @@ package excersises;
 
 import common.PaginatedSource;
 import rx.Observable;
+import rx.Subscriber;
+
+import java.util.List;
 
 public class Chapter4Impl implements Chapter4 {
 
@@ -16,7 +19,19 @@ public class Chapter4Impl implements Chapter4 {
      */
     @Override
     public Observable<Integer> getSinglePage() {
-        throw new UnsupportedOperationException();
+        return getSinglePage(0);
+    }
+
+    private Observable<Integer> getSinglePage(int pageNumber) {
+        return Observable.<List<Integer>>create(
+                subscriber -> {
+                    source.getPage(pageNumber, (list) -> {
+                        subscriber.onNext(list);
+                        subscriber.onCompleted();
+                    }, subscriber::onError);
+                }
+        ).flatMap(Observable::from)
+                .doOnNext(System.out::println);
     }
 
     /**
@@ -24,7 +39,7 @@ public class Chapter4Impl implements Chapter4 {
      */
     @Override
     public int getPageSize() {
-        throw new UnsupportedOperationException();
+        return getSinglePage().count().toBlocking().single();
     }
 
     /**
@@ -32,7 +47,12 @@ public class Chapter4Impl implements Chapter4 {
      */
     @Override
     public Observable<Integer> gracefullyHandleErrorWhenRequestingFirst3Pages() {
-        throw new UnsupportedOperationException();
+        return getSinglePage(0)
+                .onErrorResumeNext(Observable.empty())
+                .concatWith(getSinglePage(1)
+                        .onErrorResumeNext(Observable.empty()))
+                .concatWith(getSinglePage(2)
+                        .onErrorResumeNext(Observable.empty()));
     }
 
     /**
@@ -40,11 +60,15 @@ public class Chapter4Impl implements Chapter4 {
      */
     @Override
     public Observable<Integer> getAllPagesUntilEmpty() {
-        throw new UnsupportedOperationException();
+        return Observable.range(0, Integer.MAX_VALUE)
+                .concatMap((i)-> getSinglePage(i).toList())
+                .takeWhile(listObservable -> !listObservable.isEmpty())
+                .flatMap(Observable::from);
     }
 
     /**
      * Transform all numbers from the source by multiplying them with the corresponding item in the input stream.
+     *
      * @param input An Observable with the number to be used for the multiplication
      * @return The stream of transformed numbers
      */
@@ -56,6 +80,7 @@ public class Chapter4Impl implements Chapter4 {
 
     /**
      * Poll the synchronous hasUpdates method until it returns true
+     *
      * @return A stream that completes when the source has updates.
      */
     @Override
@@ -65,6 +90,7 @@ public class Chapter4Impl implements Chapter4 {
 
     /**
      * Wait until updates are available before getting all the pages from the source
+     *
      * @return A stream of numbers returned by the source.
      */
     @Override
@@ -75,6 +101,7 @@ public class Chapter4Impl implements Chapter4 {
 
     /**
      * Only return those numbers that were updated after the hasUpdates signals it has new values.
+     *
      * @return Stream of only the changed values
      */
     @Override
@@ -85,6 +112,7 @@ public class Chapter4Impl implements Chapter4 {
 
     /**
      * Return the transformed(multiplied) values of only those values that were changed after the update
+     *
      * @param input An Observable with the number to be used for the multiplication
      * @return Stream of the modified and transformed numbers.
      */

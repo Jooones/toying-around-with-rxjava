@@ -28,7 +28,7 @@ public class Chapter4Test {
 
     private PaginatedSourceImpl source = new PaginatedSourceImpl(MAX_PAGE, PAGE_SIZE, UPDATE_THRESHOLD, UPDATED_VALUES);
 
-    private Chapter4 chapter4 = new Chapter4Solution(source);
+    private Chapter4 chapter4 = new Chapter4Impl(source);
 
     @Test
     public void getSinglePage() {
