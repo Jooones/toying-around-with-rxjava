@@ -1,7 +1,6 @@
 package excersises;
 
 import common.Logger;
-import excersises.solution.Solution;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ExercisesTest {
 
-    private Exercises exercises = new Solution();
+    private Exercises exercises = new Exercises();
 
     @Before
     public void setup() {
@@ -71,6 +70,20 @@ public class ExercisesTest {
         while (wait[0]) Thread.sleep(100);
 
         assertThat(Logger.messages).containsExactly(Pair.of("Comp", "Processing:2a"), Pair.of("UI_Thread", "2a"), Pair.of("Comp", "Processing:0a"), Pair.of("UI_Thread", "0a"), Pair.of("Comp", "Processing:1a"), Pair.of("UI_Thread", "1a"), Pair.of("Comp", "Processing:2b"), Pair.of("Comp", "Processing:1b"), Pair.of("UI_Thread", "2b"), Pair.of("Comp", "Processing:0b"), Pair.of("UI_Thread", "1b"), Pair.of("Comp", "Processing:1c"), Pair.of("UI_Thread", "0b"), Pair.of("Comp", "Processing:2c"), Pair.of("UI_Thread", "1c"), Pair.of("Comp", "Processing:0c"), Pair.of("UI_Thread", "2c"), Pair.of("UI_Thread", "0c"));
+    }
+
+    @Test
+    public void gcd() {
+        assertThat(exercises.gcd(10, 100)).isEqualTo(10);
+        assertThat(exercises.gcd(49, 21)).isEqualTo(7);
+        assertThat(exercises.gcd(1440, 408)).isEqualTo(24);
+    }
+
+    @Test
+    public void gcdUsingATrampoline() {
+        assertThat(exercises.gcdUsingATrampoline(10, 100)).isEqualTo(10);
+        assertThat(exercises.gcdUsingATrampoline(49, 21)).isEqualTo(7);
+        assertThat(exercises.gcdUsingATrampoline(1440, 408)).isEqualTo(24);
     }
 
 }
