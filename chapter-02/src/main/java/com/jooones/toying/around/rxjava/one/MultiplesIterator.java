@@ -1,5 +1,7 @@
 package com.jooones.toying.around.rxjava.one;
 
+import rx.Observable;
+
 import java.util.Iterator;
 
 public class MultiplesIterator implements Iterator<Integer> {
@@ -16,8 +18,21 @@ public class MultiplesIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        int result = current;
+        Integer result = current;
         current = current+factor;
         return result;
+    }
+
+    public static Observable<Integer> getObservable(MultiplesIterator iterator){
+        return Observable.create(subscriber -> {
+            System.out.println("Creation");
+            while(iterator.hasNext()) {
+                Integer i = iterator.next();
+                subscriber.onNext(i);
+            }
+
+            System.out.println("Completed");
+            subscriber.onCompleted();
+        });
     }
 }

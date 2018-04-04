@@ -17,12 +17,12 @@ public class ObservablesTest {
 
         int nbOfElements = 6;
 
-        Observable<Integer> observableOne = Observable.from(one);
-        Observable<Integer> observableTwo = Observable.from(two);
+        Observable<Integer> observableOne = MultiplesIterator.getObservable(new MultiplesIterator(300000));
+        Observable<Integer> observableTwo = MultiplesIterator.getObservable(new MultiplesIterator(500000));
 
         Observables.sortedMerge(observableOne, observableTwo).take(nbOfElements).subscribe((i) -> {
             if(previous[0]!=null) {
-                // assertThat(i).isGreaterThanOrEqualTo(previous[0]);
+                assertThat(i).isGreaterThanOrEqualTo(previous[0]);
                 previous[0]=i;
             }
             nbOfElementsEmitted[0]++;
