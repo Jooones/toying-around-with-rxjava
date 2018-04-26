@@ -4,4 +4,5 @@ include 'original',
         'chapter-02',
         'chapter-03',
         'chapter-04',
-        'chapter-04-concurrency'
+        'chapter-04-concurrency',
+        'chapter-07'
